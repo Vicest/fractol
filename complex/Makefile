@@ -6,32 +6,36 @@
 #    By: vicmarti <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/16 23:35:47 by vicmarti          #+#    #+#              #
-#    Updated: 2021/06/22 14:42:20 by vicmarti         ###   ########.fr        #
+#    Updated: 2021/06/23 12:33:09 by vicmarti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-VPATH := src/:includes/
+vpath %.h includes
+vpath %.c src
+#vpath %.o objects
 
 MAKEFILES += " -j $(shell sysctl -n hw.ncpu)"
 
-NAME := libcomplex.a
+NAME := libftcomplex.a
 
 SRCS :=
 SRCS += ft_zset.c
 SRCS += ft_zadd.c
 SRCS += ft_zsub.c
-SRCS += ft_zmod.c
+#SRCS += ft_zmod.c
 SRCS += ft_zmul.c
 SRCS += ft_zdiv.c
 SRCS += ft_zconj.c
 
 OBJS := $(addprefix objects/, $(patsubst %.c, %.o, $(SRCS)))
 
-LIBS := -lm
+LIBS := #-lm
 
 CC := gcc
-CFLAGS := -Wall -Werror -Wextra -I. -L. -O3
+CFLAGS := -Wall -Werror -Wextra -O3 -Iincludes
 
+AR := ar
+AFLAGS := -rc
 .PHONY: all re clean fclean norm
 all : $(NAME)
 
@@ -39,17 +43,13 @@ $(NAME) : $(OBJS)
 	@tput setaf 2
 	@echo "$(NAME):"
 	@tput setaf 8
-	$(CC) $(CFLAGS) $(LIBS) $^ -o $@
+	$(AR) $(AFLAGS) $(NAME) $(OBJS)
 	@tput sgr0
 
-$(LIBFT) :
-	@make -C libft
-	@ln -vfs libft/libft.h $(INC_DIR)/
-
-%.o :%.c
+objects/%.o : %.c
 	@mkdir -vp objects
 	@tput setaf 8
-	$(CC) $(CFLAGS) $<  -c -o $@
+	$(CC) $(CFLAGS) $(LIBS) $< -c -o $@
 	@tput sgr0
 
 norm :
