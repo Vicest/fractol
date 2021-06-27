@@ -1,21 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   set_pixel.c                                        :+:      :+:    :+:   */
+/*   validate_args.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vicmarti <vicmarti@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/23 14:30:44 by vicmarti          #+#    #+#             */
-/*   Updated: 2021/06/27 10:57:40 by vicmarti         ###   ########.fr       */
+/*   Created: 2021/06/27 04:47:53 by vicmarti          #+#    #+#             */
+/*   Updated: 2021/06/27 12:17:09 by vicmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fractol.h"
 
-void	set_pixel(t_image *image, int i_pixel, int j_pixel, unsigned int colour)
+#include "libft.h"
+
+int	validate_args(int argc, char **argv)
 {
-	const unsigned int i_offset = i_pixel * (image->bpp / 8);
-	const unsigned int j_offset = j_pixel * image->line_len;
-
-	*(unsigned int *)(image->addr + i_offset + j_offset) = colour;
+	if (argc == 1)
+		return (0);
+	if (!ft_strcmp("mandelbrot", argv[1]))
+		return (1);
+	if (!ft_strcmp("julia", argv[1]))
+		return (1);
+	return (0);
 }

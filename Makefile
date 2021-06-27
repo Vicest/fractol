@@ -6,50 +6,57 @@
 #    By: vicmarti <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/16 23:35:47 by vicmarti          #+#    #+#              #
-#    Updated: 2021/06/22 14:42:20 by vicmarti         ###   ########.fr        #
+#    Updated: 2021/06/27 18:19:06 by vicmarti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-VPATH := src/:includes/
+vpath %.c src/
 
 MAKEFILES += " -j $(shell sysctl -n hw.ncpu)"
 
-NAME := libcomplex.a
+NAME := fractol
 
 SRCS :=
-SRCS += ft_zset.c
-SRCS += ft_zadd.c
-SRCS += ft_zsub.c
-SRCS += ft_zmod.c
-SRCS += ft_zmul.c
-SRCS += ft_zdiv.c
-SRCS += ft_zconj.c
+SRCS += fractol.c
+SRCS += initialize_fractal.c
+SRCS += validate_args.c
+SRCS += get_coords.c
+#SRCS += validate_arguments.c
+SRCS += set_pixel.c
+SRCS += print_fractal.c
+SRCS += mandelbrot.c
+SRCS += julia.c
 
 OBJS := $(addprefix objects/, $(patsubst %.c, %.o, $(SRCS)))
 
-LIBS := -lm
-
 CC := gcc
-CFLAGS := -Wall -Werror -Wextra -I. -L. -O3
+CFLAGS := -Wall -Werror -Wextra -g #-O3 -g
+LDFLAGS := -Llibmlx -Llibft -Lcomplex
+LDLIBS := -lmlx -framework OpenGL -framework AppKit -lft -lftcomplex
 
 .PHONY: all re clean fclean norm
 all : $(NAME)
 
-$(NAME) : $(OBJS)
+$(NAME) : $(OBJS) libft/libft.a libmlx/libmlx.a complex/libftcomplex.a
 	@tput setaf 2
 	@echo "$(NAME):"
 	@tput setaf 8
-	$(CC) $(CFLAGS) $(LIBS) $^ -o $@
+	$(CC) $(CFLAGS) $(LDFLAGS) $(LDLIBS) $^ -o $@
 	@tput sgr0
 
-$(LIBFT) :
-	@make -C libft
-	@ln -vfs libft/libft.h $(INC_DIR)/
+complex/libftcomplex.a :
+	@make -C complex
 
-%.o :%.c
+libft/libft.a :
+	@make -C libft
+
+libmlx/libmlx.a :
+	@make -j $(shell sysctl -n hw.ncpu) -C libmlx
+
+objects/%.o :%.c fractol.h libft/libft.h complex/includes/libftcomplex.h
 	@mkdir -vp objects
 	@tput setaf 8
-	$(CC) $(CFLAGS) $<  -c -o $@
+	$(CC) $(CFLAGS) -I. -Ilibft -Icomplex/includes $<  -c -o $@
 	@tput sgr0
 
 norm :
@@ -63,6 +70,9 @@ clean :
 
 fclean : clean
 	@rm -rfv $(NAME)
+	@make -C libft fclean
+	@make -C libmlx clean
+	@make -C complex fclean
 
 re :
 	@make fclean

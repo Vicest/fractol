@@ -1,21 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   set_pixel.c                                        :+:      :+:    :+:   */
+/*   get_coords.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vicmarti <vicmarti@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/23 14:30:44 by vicmarti          #+#    #+#             */
-/*   Updated: 2021/06/27 10:57:40 by vicmarti         ###   ########.fr       */
+/*   Created: 2021/06/27 18:18:39 by vicmarti          #+#    #+#             */
+/*   Updated: 2021/06/27 18:40:57 by vicmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-void	set_pixel(t_image *image, int i_pixel, int j_pixel, unsigned int colour)
+double	get_xcoord(unsigned int pixelx, double centerx, double zoom)
 {
-	const unsigned int i_offset = i_pixel * (image->bpp / 8);
-	const unsigned int j_offset = j_pixel * image->line_len;
+	return (zoom * (pixelx - WIDTH * 0.5 + 0.5 - centerx));
+}
 
-	*(unsigned int *)(image->addr + i_offset + j_offset) = colour;
+double	get_ycoord(unsigned int pixely, double centery, double zoom)
+{
+	return (zoom * (pixely - HEIGHT * 0.5 + 0.5 - centery));
+}
+
+void	get_point(t_point *point, t_pixel pixel, t_point center, double zoom)
+{
+	point->x = get_xcoord(pixel.x, center.x, zoom);
+	point->y = get_ycoord(pixel.y, center.y, zoom);
 }

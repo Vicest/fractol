@@ -1,21 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   set_pixel.c                                        :+:      :+:    :+:   */
+/*   julia.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vicmarti <vicmarti@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/23 14:30:44 by vicmarti          #+#    #+#             */
-/*   Updated: 2021/06/27 10:57:40 by vicmarti         ###   ########.fr       */
+/*   Created: 2021/06/27 12:10:29 by vicmarti          #+#    #+#             */
+/*   Updated: 2021/06/27 12:12:44 by vicmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+
 #include "fractol.h"
+#include "libftcomplex.h"
+#include <math.h>
+#include <limits.h>
 
-void	set_pixel(t_image *image, int i_pixel, int j_pixel, unsigned int colour)
+unsigned char	julia(t_point point)
 {
-	const unsigned int i_offset = i_pixel * (image->bpp / 8);
-	const unsigned int j_offset = j_pixel * image->line_len;
+	unsigned char	i;
+	t_complex		z;
+	t_complex		c;
 
-	*(unsigned int *)(image->addr + i_offset + j_offset) = colour;
+	ft_zset(&z, 0.125, -0.8);
+	ft_zset(&c, point.x, point.y);
+	i = 0;
+	while (i++ < CHAR_MAX && !isinf(z.re) && !isinf(z.im))
+	{
+		ft_zmul(&z, &z, &z); //TODO: Z POW
+		ft_zadd(&z, &z, &c);
+	}
+	return (i);
 }
