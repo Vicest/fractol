@@ -6,13 +6,12 @@
 #    By: vicmarti <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/16 23:35:47 by vicmarti          #+#    #+#              #
-#    Updated: 2021/06/23 12:33:09 by vicmarti         ###   ########.fr        #
+#    Updated: 2021/06/26 18:44:09 by vicmarti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 vpath %.h includes
 vpath %.c src
-#vpath %.o objects
 
 MAKEFILES += " -j $(shell sysctl -n hw.ncpu)"
 
@@ -29,8 +28,6 @@ SRCS += ft_zconj.c
 
 OBJS := $(addprefix objects/, $(patsubst %.c, %.o, $(SRCS)))
 
-LIBS := #-lm
-
 CC := gcc
 CFLAGS := -Wall -Werror -Wextra -O3 -Iincludes
 
@@ -44,6 +41,7 @@ $(NAME) : $(OBJS)
 	@echo "$(NAME):"
 	@tput setaf 8
 	$(AR) $(AFLAGS) $(NAME) $(OBJS)
+	ranlib $(NAME)
 	@tput sgr0
 
 objects/%.o : %.c
