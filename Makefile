@@ -6,7 +6,7 @@
 #    By: vicmarti <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/16 23:35:47 by vicmarti          #+#    #+#              #
-#    Updated: 2021/06/27 18:19:06 by vicmarti         ###   ########.fr        #
+#    Updated: 2021/06/28 22:24:38 by vicmarti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ CFLAGS := -Wall -Werror -Wextra -g #-O3 -g
 LDFLAGS := -Llibmlx -Llibft -Lcomplex
 LDLIBS := -lmlx -framework OpenGL -framework AppKit -lft -lftcomplex
 
-.PHONY: all re clean fclean norm
+.PHONY: all re clean fclean norm run
 all : $(NAME)
 
 $(NAME) : $(OBJS) libft/libft.a libmlx/libmlx.a complex/libftcomplex.a
@@ -61,6 +61,9 @@ objects/%.o :%.c fractol.h libft/libft.h complex/includes/libftcomplex.h
 
 norm :
 	@norminette $(SRCS)
+
+run : $(NAME)
+	@./$(NAME) mandelbrot
 
 clean :
 	@echo "Cleaning:"

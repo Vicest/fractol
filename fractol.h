@@ -6,17 +6,17 @@
 /*   By: vicmarti <vicmarti@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/23 14:15:59 by vicmarti          #+#    #+#             */
-/*   Updated: 2021/06/27 18:38:30 by vicmarti         ###   ########.fr       */
+/*   Updated: 2021/06/28 14:32:12 by vicmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FRACTOL_H
 # define FRACTOL_H
 # ifndef WIDTH
-#  define WIDTH 680
+#  define WIDTH 1024
 # endif
 # ifndef HEIGHT
-#  define HEIGHT 400
+#  define HEIGHT 738
 # endif
 
 typedef struct s_point
