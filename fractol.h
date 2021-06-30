@@ -6,7 +6,7 @@
 /*   By: vicmarti <vicmarti@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/23 14:15:59 by vicmarti          #+#    #+#             */
-/*   Updated: 2021/06/28 14:32:12 by vicmarti         ###   ########.fr       */
+/*   Updated: 2021/06/30 13:23:24 by vicmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,9 @@ typedef struct s_pixel
 
 typedef struct s_fractal
 {
-	unsigned char	(*function)(t_point);
+	unsigned char	(*function)(t_point, struct s_fractal);
 	t_point			center;
+	t_point			init; //TODO: VOID??
 	double			zoom;
 }				t_fractal;
 
@@ -62,7 +63,8 @@ typedef struct s_fractol
 }				t_fractol;
 
 int				validate_args(int argc, char **argv);
-void			initialize_fractal(t_fractal *fractal, char *fractal_arg);
+void			initialize_fractal(t_fractal *fractal, int argn,
+					char **fractal_argv);
 double			get_xcoord(unsigned int pixelx, double center, double zoom);
 double			get_ycoord(unsigned int pixely, double center, double zoom);
 void			get_point(t_point *point, t_pixel pixel, t_point center,
@@ -70,6 +72,8 @@ void			get_point(t_point *point, t_pixel pixel, t_point center,
 void			set_pixel(t_image*image, int i_pixel, int j_pixel,
 					unsigned int colour);
 void			print_fractal(t_image *image, t_fractal fractal);
-unsigned char	mandelbrot(t_point point);
-unsigned char	julia(t_point point);
+unsigned int	colorize(unsigned int iterations);
+unsigned char	mandelbrot(t_point point, t_fractal fractal);
+unsigned char	julia(t_point point, t_fractal fractal);
+unsigned char	newton(t_point point, t_fractal fractal);
 #endif

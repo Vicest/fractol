@@ -6,7 +6,7 @@
 /*   By: vicmarti <vicmarti@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/23 13:47:42 by vicmarti          #+#    #+#             */
-/*   Updated: 2021/06/28 22:59:42 by vicmarti         ###   ########.fr       */
+/*   Updated: 2021/06/29 14:40:03 by vicmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,14 +67,14 @@ int	mouse_handle(int button, int x, int y, t_fractol *fractol)
 {
 	if (button == 4 || button == 5)
 	{
-		fractol->fractal.center.x += get_xcoord(x, fractol->fractal.center.x,
+		fractol->fractal.center.x = get_xcoord(x, fractol->fractal.center.x,
 			fractol->fractal.zoom);
-		fractol->fractal.center.y += get_ycoord(y, fractol->fractal.center.y,
+		fractol->fractal.center.y = get_ycoord(y, fractol->fractal.center.y,
 			fractol->fractal.zoom);
 		if (button == 4)
-			fractol->fractal.zoom *= 2;
+			fractol->fractal.zoom *= 1.25;
 		else
-			fractol->fractal.zoom *= 0.5;
+			fractol->fractal.zoom *= 0.8;
 	}
 	print_fractal(&(fractol->mlx.image), fractol->fractal);
 	mlx_put_image_to_window(fractol->mlx.server, fractol->mlx.window,
@@ -91,7 +91,7 @@ int	main(int argc, char **argv)
 		print_help();
 		exit(0);
 	}
-	initialize_fractal(&fractol.fractal, argv[1]);
+	initialize_fractal(&fractol.fractal, argc - 1, &(argv[1]));
 	initialize_mlx(&fractol.mlx);
 	print_fractal(&fractol.mlx.image, fractol.fractal);
 	mlx_put_image_to_window(fractol.mlx.server, fractol.mlx.window,

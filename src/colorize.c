@@ -1,26 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_zadd.c                                          :+:      :+:    :+:   */
+/*   colorize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vicmarti <vicmarti@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/22 13:11:54 by vicmarti          #+#    #+#             */
-/*   Updated: 2021/06/30 15:04:27 by vicmarti         ###   ########.fr       */
+/*   Created: 2021/06/30 13:03:12 by vicmarti          #+#    #+#             */
+/*   Updated: 2021/06/30 14:57:13 by vicmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftcomplex.h"
-
-void	ft_zadd(t_complex *result, t_complex *z1, t_complex *z2)
+unsigned int	colorize(unsigned int iterations)
 {
-	double	tmp_re;
-	double	tmp_im;
+	unsigned int	color;
 
-	if (!result || !z1 || !z2)
-		return ;
-	tmp_re = z1->re + z2->re;
-	tmp_im = z1->im + z2->im;
-	result->re = tmp_re;
-	result->im = tmp_im;
+	if (iterations >= 144)
+		return (0);
+	color = 0x0000FF;
+	color += (iterations) * 256;
+	if (iterations < 128)
+		color ^= 0x00FFFFFF;
+	return (color);
 }

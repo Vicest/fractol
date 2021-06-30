@@ -6,7 +6,7 @@
 #    By: vicmarti <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/16 23:35:47 by vicmarti          #+#    #+#              #
-#    Updated: 2021/06/28 22:24:38 by vicmarti         ###   ########.fr        #
+#    Updated: 2021/06/30 13:22:03 by vicmarti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,10 +22,12 @@ SRCS += initialize_fractal.c
 SRCS += validate_args.c
 SRCS += get_coords.c
 #SRCS += validate_arguments.c
+SRCS += colorize.c
 SRCS += set_pixel.c
 SRCS += print_fractal.c
 SRCS += mandelbrot.c
 SRCS += julia.c
+#SRCS += newton.c
 
 OBJS := $(addprefix objects/, $(patsubst %.c, %.o, $(SRCS)))
 
