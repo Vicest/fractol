@@ -6,12 +6,12 @@
 /*   By: vicmarti <vicmarti@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/02 15:08:22 by vicmarti          #+#    #+#             */
-/*   Updated: 2021/07/02 17:02:55 by vicmarti         ###   ########.fr       */
+/*   Updated: 2021/07/02 20:24:58 by vicmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
-#include <stdio.h>
+#include <limits.h>
 
 static int	is_arrowkey(int key)
 {
@@ -37,16 +37,13 @@ int	keyboard_handle(int key, t_fractol *fractol)
 	if (is_arrowkey(key))
 		handle_arrow(key, &(fractol->fractal));
 	else if (key == KEY_MINUS)
-		fractol->fractal.max_iter -= 10;
+		fractol->fractal.max_iter = ft_max(fractol->fractal.max_iter - 8, 8);
 	else if (key == KEY_PLUS)
-		fractol->fractal.max_iter += 10;
+		fractol->fractal.max_iter = ft_min(fractol->fractal.max_iter + 8, 1024);
 	else if (key == KEY_ESC)
 		quit();
 	else
-	{
-		printf("%d\n", key);
 		return (0);
-	}
 	refresh(fractol);
 	return (0);
 }
