@@ -6,18 +6,33 @@
 /*   By: vicmarti <vicmarti@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/23 13:47:42 by vicmarti          #+#    #+#             */
-/*   Updated: 2021/06/29 14:40:03 by vicmarti         ###   ########.fr       */
+/*   Updated: 2021/07/02 15:54:38 by vicmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
-#include "mlx.h"
 #include <stdlib.h>
 #include <stdio.h>
 
+int	mouse_handle(int button, int x, int y, t_fractol *fractol)
+{
+	if (button == 4 || button == 5)
+	{
+		fractol->fractal.center.x += scale(x, WIDTH, fractol->fractal.zoom);
+		fractol->fractal.center.y += scale(y, HEIGHT, fractol->fractal.zoom);
+		if (button == 4)
+			fractol->fractal.zoom *= 1.25;
+		else
+			fractol->fractal.zoom *= 0.8;
+	}
+	refresh(fractol);
+	return (0);
+}
+
 static void	print_help()
 {
-	printf("Invalid usage: fractol [mandelbrot [start|julia] [params]\n");
+	printf("Invalid usage: fractol [<fractal_name>] [params]\n\
+			<fractal_name>: mandelbrot, julia\n");
 }
 
 int	quit()
@@ -42,44 +57,11 @@ static void	initialize_mlx(t_mlx *mlx)
 		exit(1);
 }
 
-int	keyboard_handle(int key, t_fractol *fractol)
+static void	initialize_hooks(t_fractol *fractol)
 {
-	const double	zoom = fractol->fractal.zoom;
-
-	printf("%d\n", key);
-	if (53 == key)
-		quit();
-	else if (126 == key)
-		fractol->fractal.center.y -= HEIGHT * 0.25 * zoom;
-	else if (125 == key)
-		fractol->fractal.center.y += HEIGHT * 0.25 * zoom;
-	else if (124 == key)
-		fractol->fractal.center.x += WIDTH * 0.25 * zoom;
-	else if (123 == key)
-		fractol->fractal.center.x -= WIDTH * 0.25 * zoom;
-	print_fractal(&(fractol->mlx.image), fractol->fractal);
-	mlx_put_image_to_window(fractol->mlx.server, fractol->mlx.window,
-		fractol->mlx.image.ptr, 0, 0);
-	return (0);
-}
-
-int	mouse_handle(int button, int x, int y, t_fractol *fractol)
-{
-	if (button == 4 || button == 5)
-	{
-		fractol->fractal.center.x = get_xcoord(x, fractol->fractal.center.x,
-			fractol->fractal.zoom);
-		fractol->fractal.center.y = get_ycoord(y, fractol->fractal.center.y,
-			fractol->fractal.zoom);
-		if (button == 4)
-			fractol->fractal.zoom *= 1.25;
-		else
-			fractol->fractal.zoom *= 0.8;
-	}
-	print_fractal(&(fractol->mlx.image), fractol->fractal);
-	mlx_put_image_to_window(fractol->mlx.server, fractol->mlx.window,
-		fractol->mlx.image.ptr, 0, 0);
-	return (0);
+	mlx_key_hook(fractol->mlx.window, keyboard_handle, fractol);
+	mlx_mouse_hook(fractol->mlx.window, mouse_handle, fractol);
+	mlx_hook(fractol->mlx.window, 17, 1L<<17, quit, fractol);
 }
 
 int	main(int argc, char **argv)
@@ -93,11 +75,7 @@ int	main(int argc, char **argv)
 	}
 	initialize_fractal(&fractol.fractal, argc - 1, &(argv[1]));
 	initialize_mlx(&fractol.mlx);
-	print_fractal(&fractol.mlx.image, fractol.fractal);
-	mlx_put_image_to_window(fractol.mlx.server, fractol.mlx.window,
-		fractol.mlx.image.ptr, 0, 0);
-	mlx_key_hook(fractol.mlx.window, keyboard_handle, &fractol);
-	mlx_mouse_hook(fractol.mlx.window, mouse_handle, &fractol);
-	mlx_hook(fractol.mlx.window, 17, 1L<<17, quit, &fractol);
+	initialize_hooks(&fractol);
+	refresh(&fractol);
 	mlx_loop(fractol.mlx.server);
  }

@@ -1,33 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mandelbrot.c                                       :+:      :+:    :+:   */
+/*   scale.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vicmarti <vicmarti@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/26 20:07:37 by vicmarti          #+#    #+#             */
-/*   Updated: 2021/07/02 18:57:43 by vicmarti         ###   ########.fr       */
+/*   Created: 2021/06/27 18:18:39 by vicmarti          #+#    #+#             */
+/*   Updated: 2021/07/01 20:06:07 by vicmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
-#include "libftcomplex.h"
 
-unsigned int	mandelbrot(t_point point, t_fractal fractal)
+double	scale(unsigned int value, unsigned int max_value, double zoom)
 {
-	unsigned int	i;
-	t_complex		z;
-	t_complex		c;
-
-	(void)fractal;
-	ft_zset(&z, 0.0, 0.0);
-	ft_zset(&c, point.x, point.y);
-	i = 0;
-	while (z.re * z.re + z.im * z.im < 4 && i < fractal.max_iter)
-	{
-		i++;
-		ft_zmul(&z, &z, &z);
-		ft_zadd(&z, &z, &c);
-	}
-	return (i);
+	return (zoom * (value - max_value * 0.5 + 0.5) / (max_value * 0.5));
 }

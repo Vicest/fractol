@@ -6,7 +6,7 @@
 /*   By: vicmarti <vicmarti@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/20 21:11:17 by vicmarti          #+#    #+#             */
-/*   Updated: 2021/06/23 12:20:29 by vicmarti         ###   ########.fr       */
+/*   Updated: 2021/07/01 21:12:15 by vicmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,5 @@ void	ft_zadd(t_complex *result, t_complex *z1, t_complex *z2);
 void	ft_zsub(t_complex *result, t_complex *z1, t_complex *z2);
 void	ft_zmul(t_complex *result, t_complex *z1, t_complex *z2);
 void	ft_zdiv(t_complex *result, t_complex *z1, t_complex *z2);
-void	ft_npow(t_complex *result, t_complex *z, unsigned int n);
+void	ft_zpow(t_complex *result, const t_complex *z, double n);
 #endif
