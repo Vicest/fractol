@@ -6,7 +6,7 @@
 /*   By: vicmarti <vicmarti@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/23 13:47:42 by vicmarti          #+#    #+#             */
-/*   Updated: 2021/07/02 15:54:38 by vicmarti         ###   ########.fr       */
+/*   Updated: 2021/07/02 20:51:38 by vicmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	mouse_handle(int button, int x, int y, t_fractol *fractol)
 	{
 		fractol->fractal.center.x += scale(x, WIDTH, fractol->fractal.zoom);
 		fractol->fractal.center.y += scale(y, HEIGHT, fractol->fractal.zoom);
+		mlx_mouse_move(fractol->mlx.window, WIDTH / 2, HEIGHT / 2);
 		if (button == 4)
 			fractol->fractal.zoom *= 1.25;
 		else

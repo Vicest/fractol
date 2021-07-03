@@ -6,12 +6,21 @@
 /*   By: vicmarti <vicmarti@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/26 20:07:37 by vicmarti          #+#    #+#             */
-/*   Updated: 2021/07/02 18:57:43 by vicmarti         ###   ########.fr       */
+/*   Updated: 2021/07/02 22:21:36 by vicmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 #include "libftcomplex.h"
+
+void	load_mandelbrot(t_fractal *fractal, int argn, char **argv)
+{
+	(void)argn;
+	(void)argv;
+	fractal->center.x = -0.5;
+	fractal->max_iter = 0x7F;
+	fractal->function = mandelbrot;
+}
 
 unsigned int	mandelbrot(t_point point, t_fractal fractal)
 {

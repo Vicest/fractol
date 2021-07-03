@@ -6,7 +6,7 @@
 /*   By: vicmarti <vicmarti@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/30 13:03:12 by vicmarti          #+#    #+#             */
-/*   Updated: 2021/07/02 20:16:47 by vicmarti         ###   ########.fr       */
+/*   Updated: 2021/07/02 20:39:34 by vicmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,9 @@ unsigned int	colorize(unsigned int iterations, unsigned int max_iter)
 		color_channel.g = 255 - ft_min(
 				(unsigned int)(scale * (iterations % range_size)), 0xFF);
 	}
-	return ((color_channel.r << 16) + (color_channel.g << 8) + (color_channel.b));
+	//return ((color_channel.g << 16) + (color_channel.b << 8) + (color_channel.r));
+	//return ((color_channel.g << 16) + (color_channel.r << 8) + (color_channel.b));
+	//return ((color_channel.r << 16) + (color_channel.g << 8) + (color_channel.b));
+	return ((color_channel.r << 16) + (color_channel.b << 8) + (color_channel.g));
+	//return ((color_channel.b << 16) + (color_channel.r << 8) + (color_channel.g));
 }

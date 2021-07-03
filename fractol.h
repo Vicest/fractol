@@ -6,7 +6,7 @@
 /*   By: vicmarti <vicmarti@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/23 14:15:59 by vicmarti          #+#    #+#             */
-/*   Updated: 2021/07/02 18:58:25 by vicmarti         ###   ########.fr       */
+/*   Updated: 2021/07/02 22:58:33 by vicmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,20 @@ unsigned int	colorize(unsigned int iterations, unsigned int max_iter);
 void			refresh(t_fractol *fractol);
 int				quit();
 
+//Fractal functions//
+
+void			load_mandelbrot(t_fractal *fractal, int argn, char **argv);
 unsigned int	mandelbrot(t_point point, t_fractal fractal);
+
+void			load_julia(t_fractal *fractal, int argn, char **argv);
 unsigned int	julia(t_point point, t_fractal fractal);
+
+void			load_multibrot(t_fractal *fractal, int argn, char **argv);
+unsigned int	multibrot(t_point point, t_fractal fractal);
+
+void			load_mandelbar(t_fractal *fractal, int argn, char **argv);
+unsigned int	mandelbar(t_point point, t_fractal fractal);
+
+void			load_burning_ship(t_fractal *fractal, int argn, char **argv);
+unsigned int	burning_ship(t_point point, t_fractal fractal);
 #endif
