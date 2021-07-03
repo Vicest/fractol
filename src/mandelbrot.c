@@ -6,7 +6,7 @@
 /*   By: vicmarti <vicmarti@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/26 20:07:37 by vicmarti          #+#    #+#             */
-/*   Updated: 2021/07/02 22:21:36 by vicmarti         ###   ########.fr       */
+/*   Updated: 2021/07/03 21:01:33 by vicmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,11 @@ unsigned int	mandelbrot(t_point point, t_fractal fractal)
 	t_complex		z;
 	t_complex		c;
 
-	(void)fractal;
 	ft_zset(&z, 0.0, 0.0);
 	ft_zset(&c, point.x, point.y);
 	i = 0;
-	while (z.re * z.re + z.im * z.im < 4 && i < fractal.max_iter)
+	while (z.re * z.re + z.im * z.im < fractal.escape_radius
+		&& i < fractal.max_iter)
 	{
 		i++;
 		ft_zmul(&z, &z, &z);

@@ -6,7 +6,7 @@
 /*   By: vicmarti <vicmarti@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/27 12:10:29 by vicmarti          #+#    #+#             */
-/*   Updated: 2021/07/02 22:30:23 by vicmarti         ###   ########.fr       */
+/*   Updated: 2021/07/03 20:30:36 by vicmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,16 @@
 
 void	load_julia(t_fractal *fractal, int argn, char **argv)
 {
-	(void)argn;
-	(void)argv;
-	fractal->init.x = 0.1;
-	fractal->init.x = 0.285;
-	fractal->max_iter = 0x7F;
-	/*
-	if (argn > 1)
+	fractal->custom_param1 = 0.285;
+	fractal->custom_param2 = 0.01;
+	fractal->max_iter = 0xFF;
+	fractal->escape_radius = 4;
+	if (argn > 0)
 	{
-		fractal->init.x = 
-		if (argn > 2)
+		fractal->custom_param1 = ft_atof(argv[0]);
+		if (argn > 1)
+			fractal->custom_param2 = ft_atof(argv[1]);
 	}
-	*/
 	fractal->function = julia;
 }
 
@@ -37,9 +35,10 @@ unsigned int	julia(t_point point, t_fractal fractal)
 	t_complex		c;
 
 	ft_zset(&z, point.x, point.y);
-	ft_zset(&c, fractal.init.x, fractal.init.y);
+	ft_zset(&c, fractal.custom_param1, fractal.custom_param2);
 	i = 0;
-	while (z.re * z.re + z.im * z.im < 4 && i < fractal.max_iter)
+	while (z.re * z.re + z.im * z.im < fractal.escape_radius
+		&& i < fractal.max_iter)
 	{
 		i++;
 		ft_zmul(&z, &z, &z);

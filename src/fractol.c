@@ -6,37 +6,24 @@
 /*   By: vicmarti <vicmarti@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/23 13:47:42 by vicmarti          #+#    #+#             */
-/*   Updated: 2021/07/02 20:51:38 by vicmarti         ###   ########.fr       */
+/*   Updated: 2021/07/03 23:30:35 by vicmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 #include <stdlib.h>
-#include <stdio.h>
 
-int	mouse_handle(int button, int x, int y, t_fractol *fractol)
+static void	print_help(void)
 {
-	if (button == 4 || button == 5)
-	{
-		fractol->fractal.center.x += scale(x, WIDTH, fractol->fractal.zoom);
-		fractol->fractal.center.y += scale(y, HEIGHT, fractol->fractal.zoom);
-		mlx_mouse_move(fractol->mlx.window, WIDTH / 2, HEIGHT / 2);
-		if (button == 4)
-			fractol->fractal.zoom *= 1.25;
-		else
-			fractol->fractal.zoom *= 0.8;
-	}
-	refresh(fractol);
-	return (0);
+	ft_putstr_fd("Invalid usage: fractol [<fractal_name>] [params]\n"
+		"mandelbrot: no params\n"
+		"burning_ship: no params\n"
+		"julia: real imaginary\n"
+		"mandelbar: exponent\n"
+		"multibrot: exponent\n", 1);
 }
 
-static void	print_help()
-{
-	printf("Invalid usage: fractol [<fractal_name>] [params]\n\
-			<fractal_name>: mandelbrot, julia\n");
-}
-
-int	quit()
+int	quit(void)
 {
 	exit(0);
 }
@@ -53,7 +40,7 @@ static void	initialize_mlx(t_mlx *mlx)
 	if (!mlx->image.ptr)
 		exit(1);
 	mlx->image.addr = mlx_get_data_addr(mlx->image.ptr, &mlx->image.bpp,
-		&mlx->image.line_len, &mlx->image.endian);
+			&mlx->image.line_len, &mlx->image.endian);
 	if (!mlx->image.addr)
 		exit(1);
 }
@@ -62,7 +49,7 @@ static void	initialize_hooks(t_fractol *fractol)
 {
 	mlx_key_hook(fractol->mlx.window, keyboard_handle, fractol);
 	mlx_mouse_hook(fractol->mlx.window, mouse_handle, fractol);
-	mlx_hook(fractol->mlx.window, 17, 1L<<17, quit, fractol);
+	mlx_hook(fractol->mlx.window, 17, 1L << 17, quit, fractol);
 }
 
 int	main(int argc, char **argv)
@@ -79,4 +66,4 @@ int	main(int argc, char **argv)
 	initialize_hooks(&fractol);
 	refresh(&fractol);
 	mlx_loop(fractol.mlx.server);
- }
+}

@@ -6,7 +6,7 @@
 #    By: vicmarti <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/16 23:35:47 by vicmarti          #+#    #+#              #
-#    Updated: 2021/07/02 22:59:21 by vicmarti         ###   ########.fr        #
+#    Updated: 2021/07/03 23:27:15 by vicmarti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ SRCS += fractol.c
 SRCS += initialize_fractal.c
 SRCS += validate_args.c
 SRCS += keyboard_handle.c
+SRCS += mouse_handle.c
 SRCS += scale.c
 SRCS += colorize.c
 SRCS += set_pixel.c
@@ -42,7 +43,7 @@ LDFLAGS := -Llibmlx -Llibft -Lcomplex
 OBJS := $(addprefix objects/, $(patsubst %.c, %.o, $(SRCS)))
 
 CC := gcc
-CFLAGS := -Wall -Werror -Wextra -O3
+CFLAGS := -Wall -Werror -Wextra -O3 -g
 LDFLAGS := -Llibmlx -Llibft -Lcomplex
 LDLIBS := -lmlx -framework OpenGL -framework AppKit -lft -lftcomplex
 

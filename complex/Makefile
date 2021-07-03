@@ -6,7 +6,7 @@
 #    By: vicmarti <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/16 23:35:47 by vicmarti          #+#    #+#              #
-#    Updated: 2021/07/01 21:11:35 by vicmarti         ###   ########.fr        #
+#    Updated: 2021/07/03 20:17:15 by vicmarti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,11 +21,9 @@ SRCS :=
 SRCS += ft_zset.c
 SRCS += ft_zadd.c
 SRCS += ft_zsub.c
-#SRCS += ft_zmod.c
 SRCS += ft_zmul.c
 SRCS += ft_zdiv.c
 SRCS += ft_zpow.c
-SRCS += ft_zconj.c
 
 OBJS := $(addprefix objects/, $(patsubst %.c, %.o, $(SRCS)))
 

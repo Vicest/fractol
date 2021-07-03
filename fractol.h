@@ -6,7 +6,7 @@
 /*   By: vicmarti <vicmarti@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/23 14:15:59 by vicmarti          #+#    #+#             */
-/*   Updated: 2021/07/02 22:58:33 by vicmarti         ###   ########.fr       */
+/*   Updated: 2021/07/03 23:33:33 by vicmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 #  define HEIGHT 680
 # endif
 # define KEY_ESC 53
+# define KEY_C 8
 # define KEY_PLUS 69
 # define KEY_MINUS 78
 # define ARROWKEY_UP 126
@@ -50,11 +51,14 @@ typedef struct s_pixel
 
 typedef struct s_fractal
 {
-	unsigned int	(*function)(t_point, struct s_fractal);
-	t_point			center;
-	t_point			init; //TODO: VOID??
-	unsigned int	max_iter;
 	double			zoom;
+	double			escape_radius;
+	double			custom_param1;
+	double			custom_param2;
+	t_point			center;
+	unsigned	int	(*function)(t_point, struct s_fractal);
+	unsigned int	max_iter;
+	char			color_shift;
 }				t_fractal;
 
 typedef struct s_image
@@ -87,12 +91,13 @@ void			get_point(t_point *point, t_pixel pixel, t_point center,
 					double zoom);
 void			set_pixel(t_image*image, int i_pixel, int j_pixel,
 					unsigned int colour);
-
 int				keyboard_handle(int key, t_fractol *fractol);
+int				mouse_handle(int button, int x, int y, t_fractol *fractol);
 void			print_fractal(t_image *image, t_fractal fractal);
-unsigned int	colorize(unsigned int iterations, unsigned int max_iter);
+unsigned int	colorize(unsigned int iterations, unsigned int max_iter,
+					char shift);
 void			refresh(t_fractol *fractol);
-int				quit();
+int				quit(void);
 
 //Fractal functions//
 

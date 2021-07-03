@@ -6,7 +6,7 @@
 /*   By: vicmarti <vicmarti@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/01 20:33:40 by vicmarti          #+#    #+#             */
-/*   Updated: 2021/07/01 21:17:27 by vicmarti         ###   ########.fr       */
+/*   Updated: 2021/07/03 20:19:35 by vicmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 void	ft_zpow(t_complex *result, const t_complex *z, double exp)
 {
 	double	squared_modulus;
-	double			argument;
+	double	argument;
 
 	if (z->re == 0 && z->im == 0)
 	{

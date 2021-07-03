@@ -6,50 +6,50 @@
 /*   By: vicmarti <vicmarti@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/30 13:03:12 by vicmarti          #+#    #+#             */
-/*   Updated: 2021/07/02 20:39:34 by vicmarti         ###   ########.fr       */
+/*   Updated: 2021/07/03 23:34:17 by vicmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
-#include <limits.h>
 
-unsigned int	colorize(unsigned int iterations, unsigned int max_iter)
+static void	set_color(t_rgb *color, unsigned char r, unsigned char g,
+		unsigned char b)
 {
-	t_rgb				color_channel;
+	color->r = r;
+	color->g = g;
+	color->b = b;
+}
+
+static void	shift_colors(t_rgb *color, char shift)
+{
+	t_rgb	original;
+
+	set_color(&original, color->r, color->g, color->b);
+	if (shift == 1)
+		set_color(color, color->g, color->b, color->r);
+	else if (shift == 2)
+		set_color(color, color->b, color->r, color->g);
+}
+
+unsigned int	colorize(unsigned int iterations, unsigned int max_iter,
+		char shift)
+{
+	t_rgb				color;
 	const unsigned int	range_size = max_iter / 4;
 	const double		scale = 255 / range_size;
+	const unsigned int	interpolated_value = ft_min(
+			((unsigned int)(scale * iterations)), 0xFF);
 
-	color_channel.r = 0;
-	color_channel.g = 0;
-	color_channel.b = 0;
 	if (iterations == max_iter)
 		return (0);
 	else if (iterations < range_size)
-	{
-		color_channel.g = ft_min(((unsigned int)(scale * iterations)), 0xFF);
-		color_channel.b = 255;
-	}
+		set_color(&color, 0, interpolated_value, 255);
 	else if (iterations < 2 * range_size)
-	{
-		color_channel.g = 255;
-		color_channel.b = 255 - ft_min(
-				(unsigned int)(scale * (iterations % range_size)), 0xFF);
-	}
+		set_color(&color, 0, 255, 255 - interpolated_value);
 	else if (iterations < 3 * range_size)
-	{
-		color_channel.r = ft_min(
-				(unsigned int)(scale * (iterations % range_size)), 0xFF);
-		color_channel.g = 255;
-	}
+		set_color(&color, interpolated_value, 255, 0);
 	else
-	{
-		color_channel.r = 255;
-		color_channel.g = 255 - ft_min(
-				(unsigned int)(scale * (iterations % range_size)), 0xFF);
-	}
-	//return ((color_channel.g << 16) + (color_channel.b << 8) + (color_channel.r));
-	//return ((color_channel.g << 16) + (color_channel.r << 8) + (color_channel.b));
-	//return ((color_channel.r << 16) + (color_channel.g << 8) + (color_channel.b));
-	return ((color_channel.r << 16) + (color_channel.b << 8) + (color_channel.g));
-	//return ((color_channel.b << 16) + (color_channel.r << 8) + (color_channel.g));
+		set_color(&color, 255, 255 - interpolated_value, 0);
+	shift_colors(&color, shift);
+	return ((color.r << 16) + (color.g << 8) + (color.b << 0));
 }

@@ -6,12 +6,11 @@
 /*   By: vicmarti <vicmarti@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/27 03:24:15 by vicmarti          #+#    #+#             */
-/*   Updated: 2021/07/02 22:57:54 by vicmarti         ###   ########.fr       */
+/*   Updated: 2021/07/03 23:34:50 by vicmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
-#include <limits.h>
 
 void	initialize_fractal(t_fractal *fractal, int argn, char **fractal_argv)
 {
@@ -19,6 +18,10 @@ void	initialize_fractal(t_fractal *fractal, int argn, char **fractal_argv)
 	fractal->max_iter = 0xFF;
 	fractal->center.x = 0;
 	fractal->center.y = 0;
+	fractal->escape_radius = 4;
+	fractal->color_shift = 0;
+	fractal->custom_param1 = 0;
+	fractal->custom_param2 = 0;
 	if (!ft_strcmp("mandelbrot", fractal_argv[0]))
 		load_mandelbrot(fractal, argn - 1, &(fractal_argv[1]));
 	else if (!ft_strcmp("multibrot", fractal_argv[0]))

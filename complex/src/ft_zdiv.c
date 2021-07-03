@@ -6,7 +6,7 @@
 /*   By: vicmarti <vicmarti@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/22 14:09:44 by vicmarti          #+#    #+#             */
-/*   Updated: 2021/06/23 12:20:12 by vicmarti         ###   ########.fr       */
+/*   Updated: 2021/07/03 20:19:20 by vicmarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_zdiv(t_complex *result, t_complex *z1, t_complex *z2)
 {
-	double mod_squared;
+	double	mod_squared;
 
 	if (!result || !z1 || !z2)
 		return ;
