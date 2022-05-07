@@ -6,11 +6,12 @@
 #    By: vicmarti <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/16 23:35:47 by vicmarti          #+#    #+#              #
-#    Updated: 2021/07/03 23:27:15 by vicmarti         ###   ########.fr        #
+#    Updated: 2022/05/07 20:33:51 by vicmarti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-vpath %.c src/
+vpath %.c src
+vpath %.o obj
 
 MAKEFILES += " -j $(shell sysctl -n hw.ncpu)"
 
@@ -34,16 +35,10 @@ SRCS += multibrot.c
 SRCS += mandelbar.c
 SRCS += burning_ship.c
 
-OBJS := $(addprefix objects/, $(patsubst %.c, %.o, $(SRCS)))
+OBJS := $(patsubst %.c, %.o, $(SRCS))
 
 CC := gcc
-CFLAGS := -Wall -Werror -Wextra -O3
-LDFLAGS := -Llibmlx -Llibft -Lcomplex
-
-OBJS := $(addprefix objects/, $(patsubst %.c, %.o, $(SRCS)))
-
-CC := gcc
-CFLAGS := -Wall -Werror -Wextra -O3 -g
+CFLAGS := -Wall -Werror -Wextra -O3 -I. -Ilibmlx -Ilibft -Icomplex/includes
 LDFLAGS := -Llibmlx -Llibft -Lcomplex
 LDLIBS := -lmlx -framework OpenGL -framework AppKit -lft -lftcomplex
 
@@ -66,10 +61,10 @@ libft/libft.a :
 libmlx/libmlx.a :
 	@make -j $(shell sysctl -n hw.ncpu) -C libmlx 2> /dev/null
 
-objects/%.o :%.c fractol.h libft/libft.h complex/includes/libftcomplex.h libmlx/mlx.h
-	@mkdir -vp objects
+%.o :%.c fractol.h libft/libft.h complex/includes/libftcomplex.h libmlx/mlx.h
+	@mkdir -vp obj
 	@tput setaf 8
-	$(CC) $(CFLAGS) -I. -Ilibmlx -Ilibft -Icomplex/includes $<  -c -o $@
+	$(CC) $(CFLAGS) -I. -Ilibmlx -Ilibft -Icomplex/includes $< -c -o obj/$@
 	@tput sgr0
 
 run : $(NAME)
